@@ -1,0 +1,388 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* 应用布局 */
+.App {
+  min-height: 100vh;
+}
+
+/* 侧边栏样式 */
+.ant-layout-sider {
+  background: #fff !important;
+}
+
+.ant-menu-item {
+  margin: 4px 8px !important;
+  border-radius: 6px !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #e6f7ff !important;
+  color: #1890ff !important;
+}
+
+/* 头部样式 */
+.ant-layout-header {
+  background: #fff !important;
+  padding: 0 24px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* 内容区域样式 */
+.ant-layout-content {
+  background: #f5f5f5 !important;
+  padding: 24px !important;
+}
+
+/* 卡片样式 */
+.ant-card {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* 按钮样式 */
+.ant-btn {
+  border-radius: 6px !important;
+}
+
+.ant-btn-primary {
+  background: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+.ant-btn-primary:hover {
+  background: #40a9ff !important;
+  border-color: #40a9ff !important;
+}
+
+/* 表格样式 */
+.ant-table {
+  border-radius: 8px !important;
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa !important;
+  font-weight: 600 !important;
+}
+
+/* 表单样式 */
+.ant-form-item-label > label {
+  font-weight: 500 !important;
+}
+
+/* 进度条样式 */
+.ant-progress-bg {
+  background: linear-gradient(90deg, #1890ff 0%, #52c41a 100%) !important;
+}
+
+/* 标签样式 */
+.ant-tag {
+  border-radius: 4px !important;
+}
+
+/* 模态框样式 */
+.ant-modal {
+  border-radius: 8px !important;
+}
+
+.ant-modal-header {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed !important;
+    height: 100vh !important;
+    z-index: 1000 !important;
+  }
+  
+  .ant-layout-content {
+    margin-left: 0 !important;
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 代码高亮样式 */
+.code-highlight {
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.code-diff-added {
+  background-color: #e6ffed;
+  border-left: 4px solid #28a745;
+}
+
+.code-diff-removed {
+  background-color: #ffeef0;
+  border-left: 4px solid #d73a49;
+}
+
+/* 统计卡片样式 */
+.statistic-card {
+  text-align: center;
+  padding: 24px;
+}
+
+.statistic-card .ant-statistic-title {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.statistic-card .ant-statistic-content {
+  color: #1890ff;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* 状态指示器 */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-indicator.success {
+  background-color: #52c41a;
+}
+
+.status-indicator.warning {
+  background-color: #faad14;
+}
+
+.status-indicator.error {
+  background-color: #ff4d4f;
+}
+
+.status-indicator.info {
+  background-color: #1890ff;
+}
+
+/* 加载动画 */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 工具提示样式 */
+.ant-tooltip-inner {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  border-radius: 6px !important;
+}
+
+/* 通知样式 */
+.ant-notification {
+  border-radius: 8px !important;
+}
+
+/* 分页样式 */
+.ant-pagination {
+  text-align: center !important;
+  margin-top: 16px !important;
+}
+
+/* 空状态样式 */
+.ant-empty {
+  padding: 40px 0 !important;
+}
+
+/* 结果展示样式 */
+.result-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.result-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1890ff;
+}
+
+.result-content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* 图表容器样式 */
+.chart-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 文件上传样式 */
+.upload-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  background: #fafafa;
+  transition: all 0.3s;
+}
+
+.upload-area:hover {
+  border-color: #1890ff;
+  background: #f0f8ff;
+}
+
+/* 任务状态样式 */
+.task-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.task-status.running {
+  background: #e6f7ff;
+  border-left: 4px solid #1890ff;
+}
+
+.task-status.completed {
+  background: #f6ffed;
+  border-left: 4px solid #52c41a;
+}
+
+.task-status.failed {
+  background: #fff2e8;
+  border-left: 4px solid #fa8c16;
+}
+
+/* 核心功能块悬浮效果 */
+.core-feature-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.core-feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: transparent;
+}
+
+.core-feature-card:hover .feature-icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.core-feature-card:hover .feature-title {
+  color: #1890ff;
+  transition: color 0.3s ease;
+}
+
+.core-feature-card:hover .feature-button {
+  background: #40a9ff;
+  border-color: #40a9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* 功能块内容区域 */
+.feature-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 悬浮时的背景光效 */
+.core-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.05) 0%, rgba(24, 144, 255, 0.02) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.core-feature-card:hover::before {
+  opacity: 1;
+}
+
+/* 响应式设计 - 在小屏幕上减少悬浮效果 */
+@media (max-width: 768px) {
+  .core-feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .core-feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+}

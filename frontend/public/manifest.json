@@ -1,0 +1,15 @@
+{
+  "short_name": "代码鲁棒性平台",
+  "name": "深度代码模型鲁棒性评估与增强平台",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
