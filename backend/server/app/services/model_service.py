@@ -156,16 +156,52 @@ class ModelService:
         db_model = DBModel.query.filter_by(id=model_id).first()
         if not db_model:
             raise ValueError(f'模型 {model_id} 不存在')
-        
+
+        # 检查输入参数
+        if not code1:
+            return {
+                'model_id': model_id,
+                'task_type': task_type,
+                'success': False,
+                'error': 'code1不能为空',
+                'note': '输入验证失败'
+            }
+
         # 这里应该调用实际的模型推理
-        # 暂时返回模拟结果
-        return {
-            'model_id': model_id,
-            'task_type': task_type,
-            'prediction': 0,  # 0: not clone, 1: clone
-            'confidence': 0.85,
-            'note': '这是测试结果'
-        }
+        # 如果模型文件不存在，返回错误
+        model_path = db_model.model_path
+        if not model_path or not os.path.exists(model_path):
+            return {
+                'model_id': model_id,
+                'task_type': task_type,
+                'success': False,
+                'error': f'模型文件不存在: {model_path}',
+                'note': '需要先上传或训练模型'
+            }
+
+        # 尝试加载和测试模型
+        try:
+            # 这里应该实现实际的模型推理逻辑
+            # 目前返回错误，表明需要实现
+            return {
+                'model_id': model_id,
+                'task_type': task_type,
+                'success': False,
+                'error': '模型推理逻辑尚未实现',
+                'note': '需要实现真实的模型推理算法',
+                'code1': code1,
+                'code2': code2
+            }
+        except Exception as e:
+            return {
+                'model_id': model_id,
+                'task_type': task_type,
+                'success': False,
+                'error': f'模型推理失败: {str(e)}',
+                'note': '模型推理过程中发生错误',
+                'code1': code1,
+                'code2': code2
+            }
     
     # ==================== 模型文件上传相关方法 ====================
     

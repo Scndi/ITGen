@@ -71,37 +71,61 @@ def create_attack():
         logger.info(f"🔍 完整请求数据: {data}")
 
         if not code_data or not isinstance(code_data, dict):
-            logger.warning("⚠️ code_data为空或不是字典，使用默认演示数据")
-            code_data = {
-                'code1': 'def demo_function():\n    return "demo"',
-                'code2': 'def demo_function():\n    return "demo"'
-            }
+            return jsonify({
+                'success': False,
+                'error': 'code_data不能为空且必须是字典格式',
+                'task_id': None
+            }), 400
 
         if 'code1' not in code_data or 'code2' not in code_data:
-            logger.warning(f"⚠️ code_data缺少code1或code2字段，使用默认演示数据，现有字段: {list(code_data.keys())}")
-            code_data = {
-                'code1': code_data.get('code1', 'def demo_function():\n    return "demo"'),
-                'code2': code_data.get('code2', 'def demo_function():\n    return "demo"')
-            }
+            return jsonify({
+                'success': False,
+                'error': 'code_data必须包含code1和code2字段',
+                'task_id': None
+            }), 400
 
         # 生成任务ID
         task_id = str(uuid.uuid4())
         logger.info(f"🎯 [任务 {task_id}] 创建攻击任务")
         logger.info(f"📦 模型: {model_name}, 方法: {method}, 任务类型: {task_type}")
 
-        # 直接返回静态数据（跳过复杂的算法调用）
-        result_data = {
-            'success': True,
-            'original_code': code_data.get('code1', ''),
-            'adversarial_code': code_data.get('code1', '').replace('def ', 'def adversarial_'),
-            'replaced_words': {'def': ['def adversarial_']},
-            'query_times': 5,
-            'time_cost': 2.5,
-            'method': method,
-            'note': '演示数据 - 前后端交互成功'
-        }
+        # 创建真实的攻击任务
+        try:
+            # 调用攻击服务执行任务
+            result_data = attack_service.attack(
+                code_data=code_data,
+                target_model=model_name,
+                language=language,
+                config={
+                    'model_id': model_id,
+                    'task_type': task_type,
+                    'true_label': true_label,
+                    'attack_strategy': attack_strategy,
+                    'max_modifications': max_modifications,
+                    'max_query_times': max_query_times,
+                    'time_limit': time_limit,
+                    'max_substitutions': max_substitutions
+                },
+                method=method
+            )
 
-        # 模拟异步任务处理（直接设置为完成状态）
+            # 如果攻击失败，返回错误
+            if not result_data.get('success'):
+                return jsonify({
+                    'success': False,
+                    'error': result_data.get('error', '攻击执行失败'),
+                    'task_id': task_id
+                }), 400
+
+        except Exception as attack_error:
+            logger.error(f"攻击执行失败: {attack_error}")
+            return jsonify({
+                'success': False,
+                'error': f'攻击执行失败: {str(attack_error)}',
+                'task_id': task_id
+            }), 500
+
+        # 创建异步任务记录
         try:
             # 尝试创建任务记录（如果数据库可用）
             task_service.create_task(
@@ -199,30 +223,11 @@ def get_attack_status(task_id):
 
     except Exception as e:
         logger.error(f"获取状态失败: {str(e)}")
-        # 即使数据库出错，也返回演示数据保证前端交互
-        from datetime import datetime
-        status_info = {
-            'status': 'completed',
-            'progress': 100,
-            'message': '任务完成（演示数据 - 数据库异常）',
-            'start_time': datetime.now().isoformat(),
-            'end_time': datetime.now().isoformat(),
-            'result': {
-                'success': True,
-                'original_code': 'def demo(): pass',
-                'adversarial_code': 'def demo_adversarial(): pass',
-                'replaced_words': {'def': ['def demo_adversarial']},
-                'query_times': 3,
-                'time_cost': 1.2,
-                'method': 'itgen',
-                'note': '演示数据 - 数据库异常但保证前端交互'
-            }
-        }
-
         return jsonify({
-            'success': True,
-            'status': status_info
-        }), 200
+            'success': False,
+            'error': f'获取任务状态失败: {str(e)}',
+            'status': None
+        }), 500
 
 @bp.route('/attack/results/<task_id>', methods=['GET'])
 def get_attack_results(task_id):

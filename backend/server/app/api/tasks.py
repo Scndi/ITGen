@@ -40,67 +40,21 @@ def get_task(task_id: str):
                 'task': task.to_dict()
             })
         else:
-            # 如果任务不存在，返回演示数据（保证前后端交互）
-            logger.info(f"任务 {task_id} 不存在，返回演示数据")
-
-            from datetime import datetime
-            demo_task = {
-                'id': task_id,
-                'task_type': 'single_attack',
-                'sub_task_type': 'itgen',
-                'status': 'completed',
-                'progress': 100,
-                'progress_message': '任务完成（演示数据）',
-                'result': {
-                    'success': True,
-                    'original_code': 'def demo(): pass',
-                    'adversarial_code': 'def adversarial_demo(): pass',
-                    'replaced_words': {'def': ['def adversarial_']},
-                    'query_times': 5,
-                    'time_cost': 2.5,
-                    'method': 'itgen',
-                    'note': '演示数据 - 前后端交互成功'
-                },
-                'created_at': datetime.now().isoformat(),
-                'started_at': datetime.now().isoformat(),
-                'completed_at': datetime.now().isoformat()
-            }
-
+            # 如果任务不存在，返回错误信息
+            logger.warning(f"任务 {task_id} 不存在")
             return jsonify({
-                'success': True,
-                'task': demo_task
-            })
+                'success': False,
+                'error': f'任务 {task_id} 不存在',
+                'task': None
+            }), 404
 
     except Exception as e:
         logger.error(f"获取任务失败: {str(e)}")
-        # 即使数据库出错，也返回演示数据保证前端交互
-        from datetime import datetime
-        demo_task = {
-            'id': task_id,
-            'task_type': 'single_attack',
-            'sub_task_type': 'itgen',
-            'status': 'completed',
-            'progress': 100,
-            'progress_message': '任务完成（演示数据 - 数据库异常）',
-            'result': {
-                'success': True,
-                'original_code': 'def demo(): pass',
-                'adversarial_code': 'def demo_adversarial(): pass',
-                'replaced_words': {'def': ['def demo_adversarial']},
-                'query_times': 3,
-                'time_cost': 1.2,
-                'method': 'itgen',
-                'note': '演示数据 - 数据库异常但保证前端交互'
-            },
-            'created_at': datetime.now().isoformat(),
-            'started_at': datetime.now().isoformat(),
-            'completed_at': datetime.now().isoformat()
-        }
-
         return jsonify({
-            'success': True,
-            'task': demo_task
-        })
+            'success': False,
+            'error': f'获取任务失败: {str(e)}',
+            'task': None
+        }), 500
 
 
 @bp.route('/tasks', methods=['GET'])
@@ -161,38 +115,8 @@ def list_tasks():
                 task_types[task_type_name] = task_types.get(task_type_name, 0) + 1
             logger.info(f"📊 任务类型分布: {task_types}")
 
-        # 如果没有任务且是查询single_attack类型，添加演示数据
-        if len(tasks) == 0 and task_type == 'single_attack':
-            logger.info("📝 single_attack类型任务为空，添加演示数据")
-            from datetime import datetime
-            demo_tasks = [
-                {
-                    'id': f'demo-attack-{i}',
-                    'task_type': 'single_attack',
-                    'sub_task_type': 'itgen',
-                    'status': 'completed',
-                    'progress': 100,
-                    'progress_message': '演示任务完成',
-                    'result': {
-                        'success': True,
-                        'original_code': f'def demo_function_{i}():\n    return "demo"',
-                        'adversarial_code': f'def adversarial_demo_function_{i}():\n    return "demo"',
-                        'replaced_words': {'def': [f'def adversarial_']},
-                        'query_times': 21,
-                        'time_cost': 0.023,
-                        'method': 'itgen',
-                        'note': f'演示数据 - 任务{i}'
-                    },
-                    'created_at': datetime.now().isoformat(),
-                    'updated_at': datetime.now().isoformat(),
-                    'priority': 8,
-                    'queue_name': 'attack'
-                } for i in range(1, 6)
-            ]
-            task_dicts = demo_tasks
-        else:
-            # 转换为字典格式
-            task_dicts = [task.to_dict() for task in tasks]
+        # 转换为字典格式
+        task_dicts = [task.to_dict() for task in tasks]
 
         return jsonify({
             'success': True,
@@ -349,12 +273,8 @@ def update_task_status(task_id: str):
                 'message': '任务状态已更新'
             })
         except Exception as db_error:
-            logger.warning(f"数据库更新失败: {db_error}，返回演示成功")
-            # 即使数据库操作失败，也返回成功（演示模式）
-            return jsonify({
-                'success': True,
-                'message': '任务状态已更新 (演示模式)'
-            })
+            logger.error(f"数据库更新失败: {db_error}")
+            raise  # 重新抛出异常，让外层异常处理
 
     except Exception as e:
         logger.error(f"更新任务状态失败: {str(e)}")
