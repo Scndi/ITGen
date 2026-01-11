@@ -272,26 +272,16 @@ class ApiService {
         };
       }
 
-      // 如果是其他错误（网络错误等），返回模拟数据（仅用于演示模式）
-      console.log('🔄 API连接失败，返回模拟数据');
+      // 返回真实的错误信息
+      console.error('❌ API连接失败:', error.message);
       return {
-        success: true,
+        success: false,
+        error: error.message || '网络连接失败',
         status: {
-          status: 'completed',
-          progress: 100,
-          message: '任务完成（模拟数据）',
-          start_time: new Date().toISOString(),
-          end_time: new Date().toISOString(),
-          result: {
-            success: true,
-            original_code: 'def demo_function(): pass',
-            adversarial_code: 'def adversarial_demo_function(): pass',
-            replaced_words: {'def': ['def adversarial_']},
-            query_times: 5,
-            time_cost: 2.5,
-            method: 'itgen',
-            note: '演示数据 - API连接失败'
-          }
+          status: 'failed',
+          progress: 0,
+          message: 'API连接失败，无法获取任务状态',
+          error: error.message || '网络连接失败'
         }
       };
     }
@@ -353,11 +343,12 @@ class ApiService {
         responseData: error.response?.data
       });
 
-      // 即使API调用失败，也返回成功（演示模式）
-      console.log('🔄 API调用失败，使用演示模式');
+      // 返回真实的错误信息
+      console.error('❌ API调用失败:', error.message);
       return {
-        success: true,
-        message: '任务状态已更新 (演示模式 - API连接失败)'
+        success: false,
+        error: error.message || 'API调用失败',
+        message: '任务状态更新失败'
       };
     }
   }
