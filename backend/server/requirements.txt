@@ -1,0 +1,76 @@
+# ITGen Backend - Core Requirements
+# 安装命令: pip install -r requirements.txt
+
+# ===========================================
+# Web Framework & API
+# ===========================================
+Flask==2.3.3
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.1
+gunicorn==21.2.0
+
+# ===========================================
+# Database & Data Processing
+# ===========================================
+SQLAlchemy==2.0.23
+PyMySQL==1.1.0
+numpy>=1.21.0,<2.0.0
+pandas==2.1.4
+
+# ===========================================
+# Machine Learning & AI
+# ===========================================
+torch>=2.0.0,<3.0.0
+torchaudio>=2.0.0,<3.0.0
+torchvision>=0.15.0,<0.18.0
+transformers>=4.20.0,<5.0.0
+scikit-learn>=1.0.0,<2.0.0
+tokenizers>=0.13.0,<0.19.0
+
+# ===========================================
+# HTTP & Networking
+# ===========================================
+requests==2.31.0
+python-dotenv==1.0.0
+
+# ===========================================
+# Data Validation & Serialization
+# ===========================================
+pydantic==2.5.0
+pydantic_core==2.14.1
+
+# ===========================================
+# Image Processing
+# ===========================================
+Pillow>=9.0.0,<11.0.0
+
+# ===========================================
+# Development & Testing (可选)
+# ===========================================
+# pytest>=7.0.0,<8.0.0
+# black>=22.0.0,<24.0.0
+# flake8>=5.0.0,<7.0.0
+# mypy>=1.0.0,<2.0.0
+
+# ===========================================
+# GPU Support (可选)
+# ===========================================
+# 如果需要GPU支持，请取消注释以下行并注释掉上面的CPU版本
+# torch==2.1.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+# torchaudio==2.1.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+# torchvision==0.16.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+
+# ===========================================
+# 安装说明
+# ===========================================
+# 1. CPU版本（推荐）:
+#    pip install -r requirements.txt
+#
+# 2. GPU版本（需要CUDA）:
+#    pip install torch==2.1.0+cu121 torchaudio==2.1.0+cu121 torchvision==0.16.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+#    pip install -r requirements.txt
+#
+# 3. 开发环境:
+#    pip install -r requirements.txt
+#    pip install pytest black flake8 mypy  # 开发工具
