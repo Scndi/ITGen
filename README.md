@@ -10,6 +10,11 @@
 
 ITGen是一个基于深度学习的代码模型鲁棒性评估与增强平台，支持多种编程语言的代码克隆检测、漏洞检测和代码摘要生成任务。通过对抗性攻击测试和模型微调，提升代码模型的鲁棒性和安全性。
 
+### 🔗 项目链接
+
+- **GitHub仓库**: [https://github.com/Scndi/ITGen](https://github.com/Scndi/ITGen)
+- **文档**: [https://github.com/Scndi/ITGen/blob/main/README.md](https://github.com/Scndi/ITGen/blob/main/README.md)
+
 ### ✨ 主要特性
 
 - 🔍 **代码克隆检测**: 支持多种深度学习模型进行代码相似性分析
